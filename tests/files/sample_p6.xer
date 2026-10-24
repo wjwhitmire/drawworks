@@ -1,0 +1,50 @@
+ERMHDR	19.12	2026-11-20	Project	admin	Planner	dbxDatabaseNoName	Project Management	USD
+%T	CURRTYPE
+%F	curr_id	curr_short_name
+%R	1	USD
+%T	UDFTYPE
+%F	udf_type_id	table_name	udf_type_label
+%R	1	TASK	Shift note
+%T	CALENDAR
+%F	clndr_id	default_flag	clndr_name	proj_id	base_clndr_id	clndr_type	day_hr_cnt	week_hr_cnt	clndr_data
+%R	597	N	Shop 5 day	4401		CA_Project	8	40	(0||CalendarData()(  (0||DaysOfWeek()(    (0||1()())    (0||2()(      (0||0(s|08:00|f|12:00)())      (0||1(f|17:00|s|13:00)())))    (0||3()(      (0||0(s|08:00|f|12:00)())      (0||1(f|17:00|s|13:00)())))    (0||4()(      (0||0(s|08:00|f|12:00)())      (0||1(f|17:00|s|13:00)())))    (0||5()(      (0||0(s|08:00|f|12:00)())      (0||1(f|17:00|s|13:00)())))    (0||6()(      (0||0(s|08:00|f|12:00)())      (0||1(f|17:00|s|13:00)())))    (0||7()())))  (0||VIEW(ShowTotal|Y)())  (0||Exceptions()(    (0||0(d|46352)())))))
+%R	598	Y	Unused global			CA_Base	8	40	
+%T	PROJECT
+%F	proj_id	proj_short_name	clndr_id	plan_start_date	plan_end_date	scd_end_date	last_recalc_date	critical_drtn_hr_cnt	critical_path_type	export_flag
+%R	4401	CAFE-TI	597	2026-11-23 08:00		2026-12-07 17:00	2026-11-23 08:00	0	CT_TotFloat	Y
+%T	SCHEDOPTIONS
+%F	schedoptions_id	proj_id	sched_retained_logic	sched_progress_override	sched_float_type	sched_calendar_on_relationship_lag
+%R	12	4401	Y	N	FT_FF	rcal_Predecessor
+%T	PROJWBS
+%F	wbs_id	proj_id	seq_num	proj_node_flag	wbs_short_name	wbs_name	parent_wbs_id
+%R	9000	4401	0	Y	CAFE-TI	Café tenant improvement	
+%R	9001	4401	10	N	DES	Design and procurement	9000
+%R	9002	4401	20	N	CON	Construction	9000
+%T	TASK
+%F	task_id	proj_id	wbs_id	clndr_id	task_code	task_name	task_type	status_code	target_drtn_hr_cnt	remain_drtn_hr_cnt	early_start_date	early_end_date	late_start_date	late_end_date	total_float_hr_cnt	free_float_hr_cnt	cstr_type	cstr_date	complete_pct_type	phys_complete_pct	act_start_date	act_end_date	target_start_date	target_end_date	custom_field_x
+%R	70001	4401	9001	597	A1000	Notice to proceed	TT_Mile	TK_NotStart	0	0	2026-11-23 08:00	2026-11-23 08:00	2026-11-23 08:00	2026-11-23 08:00	0	0			CP_Drtn	0			2026-11-23 08:00	2026-11-23 08:00	x	extra
+%R	70002	4401	9001	597	A1010	Owner’s café layout design	TT_Task	TK_NotStart	24	24	2026-11-23 08:00	2026-11-25 17:00	2026-11-23 08:00	2026-11-25 17:00	0	0			CP_Drtn	0			2026-11-23 08:00	2026-11-25 17:00	x	extra
+%R	70003	4401	9001	597	A1020	Procure equipment	TT_Task	TK_NotStart	40	40	2026-11-24 08:00	2026-12-01 17:00	2026-11-24 08:00	2026-12-01 17:00	0	0			CP_Drtn	0			2026-11-24 08:00	2026-12-01 17:00	x	extra
+%R	70004	4401	9001	597	A1050	Permit	TT_Task	TK_NotStart	16	16	2026-11-23 08:00	2026-11-24 17:00	2026-11-30 08:00	2026-12-01 17:00	32	32			CP_Drtn	0			2026-11-23 08:00	2026-11-24 17:00	x	extra
+%R	70005	4401	9002	597	A1030	Build out	TT_Task	TK_NotStart	32	32	2026-12-02 08:00	2026-12-07 17:00	2026-12-02 08:00	2026-12-07 17:00	0	0			CP_Drtn	0			2026-12-02 08:00	2026-12-07 17:00	x	extra
+%R	70006	4401	9002	597	A1040	Open for business	TT_FinMile	TK_NotStart	0	0	2026-12-07 17:00	2026-12-07 17:00	2026-12-07 17:00	2026-12-07 17:00	0	0			CP_Drtn	0			2026-12-07 17:00	2026-12-07 17:00	x	extra
+%T	TASKPRED
+%F	task_pred_id	task_id	pred_task_id	proj_id	pred_proj_id	pred_type	lag_hr_cnt
+%R	80001	70002	70001	4401	4401	PR_FS	0
+%R	80002	70003	70002	4401	4401	PR_SS	8
+%R	80003	70005	70002	4401	4401	PR_FS	0
+%R	80004	70005	70003	4401	4401	PR_FS	0
+%R	80005	70004	70001	4401	4401	PR_FS	0
+%R	80006	70005	70004	4401	4401	PR_FS	0
+%R	80007	70006	70005	4401	4401	PR_FS	0
+%R	80008	70006	99999	4401	4401	PR_FS	0
+%T	RSRC
+%F	rsrc_id	rsrc_name	rsrc_short_name	rsrc_type
+%R	300	General contractor crew	GC	RT_Labor
+%T	RSRCRATE
+%F	rsrc_rate_id	rsrc_id	max_qty_per_hr
+%R	1	300	2
+%T	TASKRSRC
+%F	taskrsrc_id	task_id	proj_id	rsrc_id	target_qty	act_reg_qty	act_ot_qty	target_qty_per_hr	remain_qty
+%R	500	70005	4401	300	64	0	0	2	64
+%E

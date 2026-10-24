@@ -1,0 +1,133 @@
+<div class="page">
+<div id="app" class="app" data-density="comfortable">
+  <header class="top">
+    <div class="brand"><svg class="mark" width="32" height="32" viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="96" fill="#14232b"/><g transform="translate(256 256) scale(1.0) translate(-256 -256)"><rect x="100" y="60" width="34" height="272" rx="17" fill="#dfe7eb"/><rect x="378" y="60" width="34" height="272" rx="17" fill="#dfe7eb"/><rect x="156" y="96" width="100" height="44" rx="8" fill="#dfe7eb"/><rect x="290" y="164" width="66" height="44" rx="8" fill="#dfe7eb" opacity=".72"/><rect x="156" y="232" width="200" height="44" rx="8" fill="#ff6b5c"/><path d="M256 118h16v68h18" fill="none" stroke="#dfe7eb" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><path d="M256 276v84" fill="none" stroke="#ff9ad6" stroke-width="14" stroke-linecap="round"/><path d="M256 352l40 40-40 40-40-40z" fill="#ff9ad6"/></g></svg><span class="name" id="productName"></span></div>
+    <nav class="menubar" id="menubar" aria-label="Menu">
+      <button type="button" class="mb" id="m-file" aria-haspopup="true" aria-expanded="false">File</button>
+      <button type="button" class="mb" id="m-edit" aria-haspopup="true" aria-expanded="false">Edit</button>
+      <button type="button" class="mb" id="m-view" aria-haspopup="true" aria-expanded="false">View</button>
+      <button type="button" class="mb" id="m-project" aria-haspopup="true" aria-expanded="false">Project</button>
+      <button type="button" class="mb" id="m-tools" aria-haspopup="true" aria-expanded="false">Tools</button>
+      <button type="button" class="mb" id="m-help" aria-haspopup="true" aria-expanded="false">Help</button>
+    </nav>
+    <span class="tabs-fill"></span>
+    <span class="proj d" id="projName"></span>
+    <span class="ex-chip" id="projLabel" hidden>Example</span>
+    <button type="button" class="iconbtn theme-btn" id="themeBtn" aria-label="Switch theme" title="Switch theme">{{icon:moon}}</button>
+    <button type="button" class="iconbtn only-phone" id="menuBtn" aria-label="Menu" aria-haspopup="true" aria-expanded="false">{{icon:menu}}</button>
+  </header>
+
+  <div class="toolbar" id="toolbar" role="toolbar" aria-label="Schedule tools">
+    <button type="button" class="tb primary" id="tb-schedule" title="Schedule (F9)" aria-label="Schedule">{{icon:schedule}}<span>Schedule</span><kbd>F9</kbd></button>
+    <button type="button" class="tb sec" id="tb-add" title="Add activity (Insert)" aria-label="Add">{{icon:add}}<span>Add</span></button>
+    <button type="button" class="tb sec" id="tb-del" title="Delete activity (Delete)" aria-label="Delete">{{icon:delete}}<span>Delete</span></button>
+    <button type="button" class="tb sec" id="tb-undo" title="Undo (Ctrl+Z)" aria-label="Undo">{{icon:undo}}<span>Undo</span></button>
+    <button type="button" class="tb sec wide" id="tb-redo" title="Redo (Ctrl+Y)" aria-label="Redo">{{icon:redo}}<span>Redo</span></button>
+    <span class="sep" aria-hidden="true"></span>
+    <button type="button" class="tb" id="tb-update" title="Update progress" aria-label="Update progress">{{icon:update}}<span>Update</span></button>
+    <button type="button" class="tb sec wide" id="tb-baseline" title="Baselines" aria-label="Baseline">{{icon:baseline}}<span>Baseline</span></button>
+    <button type="button" class="tb sec wide" id="tb-level" title="Resource leveling suggestions" aria-label="Level">{{icon:level}}<span>Level</span></button>
+    <span class="sep wide" aria-hidden="true"></span>
+    <label class="tbl-lab" for="tb-layout">Layout</label>
+    <select id="tb-layout" class="tsel"></select>
+    <label class="tbl-lab" for="tb-filter">Filter</label>
+    <select id="tb-filter" class="tsel"></select>
+    <span class="searchbox">{{icon:search}}<label class="sr" for="tb-search">Find activity</label><input id="tb-search" class="tsearch" type="search" placeholder="Find ID or name" autocomplete="off"></span>
+    <span class="sep wide" aria-hidden="true"></span>
+    <button type="button" class="tb icon wide" id="tb-zoomout" title="Zoom out (Ctrl+-)" aria-label="Zoom out">{{icon:zoom-out}}</button>
+    <span class="zoom wide" id="tb-zoom" aria-live="polite"></span>
+    <button type="button" class="tb icon wide" id="tb-zoomin" title="Zoom in (Ctrl+=)" aria-label="Zoom in">{{icon:zoom-in}}</button>
+    <span class="sep wide" aria-hidden="true"></span>
+    <button type="button" class="tb sec" id="tb-export" title="Export" aria-label="Export" aria-haspopup="true">{{icon:export}}<span>Export</span></button>
+    <button type="button" class="tb icon only-phone" id="tb-more" aria-label="More tools" title="More tools" aria-haspopup="true">{{icon:more}}</button>
+  </div>
+
+  <div class="tabs" role="tablist" aria-label="Views">
+    <button type="button" role="tab" class="tab" id="v-acts" aria-selected="true">{{icon:gantt}}<span>Activities</span></button>
+    <button type="button" role="tab" class="tab" id="v-net" aria-selected="false">{{icon:network}}<span>Network</span></button>
+    <button type="button" role="tab" class="tab" id="v-res" aria-selected="false">{{icon:histogram}}<span>Resources</span></button>
+    <button type="button" role="tab" class="tab" id="v-check" aria-selected="false">{{icon:check}}<span>Check</span><span class="badge" id="checkBadge" hidden></span></button>
+    <span class="tabs-fill"></span>
+    <span class="pane-switch" id="paneSwitch" role="group" aria-label="Activities pane">
+      <button type="button" class="ps" id="ps-table" aria-pressed="true">Table</button>
+      <button type="button" class="ps" id="ps-gantt" aria-pressed="false">Gantt</button>
+    </span>
+    <div class="key" id="key" role="status"><svg class="key-ico" viewBox="0 0 26 26" aria-hidden="true"><path d="M13 1.5L24.5 13 13 24.5 1.5 13z"/></svg><span class="key-l" id="keyL"></span><span class="key-v" id="keyV"></span><span class="key-s" id="keyS"></span></div>
+  </div>
+
+  <div class="banner" id="banner" role="alert" hidden></div>
+
+  <main class="main" id="main">
+    <section class="view" id="view-acts" aria-label="Activities">
+      <div class="sheet" id="sheet">
+        <div class="pane tpane" id="tpane">
+          <div class="thead" id="thead"></div>
+          <div class="tscroll" id="tscroll" tabindex="0" aria-label="Activity table" role="grid">
+            <div class="spacer" id="tspacer"><div class="rows" id="trows"></div></div>
+          </div>
+        </div>
+        <div class="split" id="split" role="separator" aria-orientation="vertical" aria-label="Resize table" tabindex="0"></div>
+        <div class="pane gpane" id="gpane">
+          <div class="ghead" id="ghead"><svg id="gscale" class="gscale" aria-hidden="true"></svg></div>
+          <div class="gscroll" id="gscroll" aria-label="Gantt chart">
+            <div class="spacer" id="gspacer"><svg id="gsvg" class="gsvg" role="img" aria-label="Gantt chart bars"></svg></div>
+          </div>
+        </div>
+      </div>
+      <section class="details" id="details" aria-label="Activity details">
+        <div class="dtabs" role="tablist" aria-label="Activity details">
+          <button type="button" role="tab" class="dtab" id="d-general" aria-selected="true">General</button>
+          <button type="button" role="tab" class="dtab" id="d-status" aria-selected="false">Status</button>
+          <button type="button" role="tab" class="dtab" id="d-rels" aria-selected="false">Relationships</button>
+          <button type="button" role="tab" class="dtab" id="d-rsrc" aria-selected="false">Resources</button>
+          <button type="button" role="tab" class="dtab" id="d-notes" aria-selected="false">Notes</button>
+          <span class="tabs-fill"></span>
+          <button type="button" class="iconbtn" id="d-toggle" aria-label="Hide details" title="Hide details">{{icon:chev-d}}</button>
+        </div>
+        <div class="dhead" id="dhead"></div>
+        <div class="dbody" id="dbody"></div>
+      </section>
+    </section>
+    <section class="view" id="view-net" aria-label="Network" hidden>
+      <div class="vhead"><p class="muted" id="netNote"></p></div>
+      <div class="netscroll" id="netscroll" tabindex="0" aria-label="Network diagram"><svg id="netsvg" class="netsvg" role="img" aria-label="Activity network diagram"></svg></div>
+    </section>
+    <section class="view" id="view-res" aria-label="Resources" hidden>
+      <div class="vhead">
+        <label for="r-rsrc" class="lab">Resource</label><select id="r-rsrc"></select>
+        <label for="r-which" class="sr">Dates</label><select id="r-which" class="sr-sel"><option value="early">Early dates</option><option value="late">Late dates</option></select>
+        <span class="seg" role="group" aria-label="Dates"><button type="button" id="r-early" aria-pressed="true">Early</button><button type="button" id="r-late" aria-pressed="false">Late</button></span>
+        <label for="r-bucket" class="sr">Bucket</label><select id="r-bucket" class="sr-sel"><option value="day">Day</option><option value="week">Week</option></select>
+        <span class="seg" role="group" aria-label="Bucket"><button type="button" id="r-day" aria-pressed="true">Day</button><button type="button" id="r-week" aria-pressed="false">Week</button></span>
+        <button type="button" class="btn" id="r-manage">{{icon:resource}}Resources</button>
+      </div>
+      <div class="histwrap" id="histwrap"><svg id="histsvg" role="img" aria-label="Resource histogram"></svg></div>
+      <div class="hleg" id="histfoot"></div>
+      <div class="sect" id="levelbox"></div>
+    </section>
+    <section class="view" id="view-check" aria-label="Schedule check" hidden>
+      <div class="checkwrap" id="checkwrap"></div>
+    </section>
+  </main>
+
+  <footer class="status" id="statusbar">
+    <span id="st-dd"></span><span id="st-finish" class="hide-s"></span><span id="st-count" class="hide-s"></span><span id="st-crit"></span><span id="st-save" class="hide-s"></span>
+    <span class="fill"></span>
+    <button type="button" class="btn ghost" id="st-hist">{{icon:history}}<span>History</span> <span class="badge" id="histCount"></span></button>
+  </footer>
+</div>
+<footer class="foot">
+  <p>Built by Will Whitmire. Runs entirely in your browser; nothing you enter is uploaded.</p>
+  <p class="maker">W. Whitmire / Field Tools / No. 18</p>
+  <details id="method">
+    <summary>Method and limits</summary>
+    <div class="method" id="methodBody"></div>
+  </details>
+</footer>
+</div>
+<div class="menu" id="menu" role="menu" hidden></div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden><span id="toastMsg"></span><button type="button" class="btn link" id="toastUndo" hidden>Undo</button></div>
+<dialog id="dlg" class="dlg" aria-labelledby="dlgTitle"><form method="dialog" class="dlgform" id="dlgForm"><div class="dlg-h"><h2 id="dlgTitle"></h2><button type="button" class="iconbtn" id="dlgX" aria-label="Close">{{icon:close}}</button></div><div class="dlg-b dlgbody" id="dlgBody"></div><div class="dlg-a dlgact" id="dlgAct"></div></form></dialog>
+<input type="file" id="fileIn" accept=".xer,.xml,.json,text/xml,application/json" hidden>
+<label for="fileIn" class="sr">Open a schedule file</label>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><pattern id="pc-near" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect style="fill:var(--bar-near-tint)" width="4" height="4"/><path style="stroke:var(--bar-near);stroke-width:1.6" d="M0 0v4"/></pattern><symbol id="pen-crit" viewBox="0 0 20 12"><rect style="fill:var(--bar-crit)" x="1" y="2" width="18" height="8"/></symbol><symbol id="pen-near" viewBox="0 0 20 12"><rect style="fill:url(#pc-near);stroke:var(--bar-near);stroke-width:1.5" x="1" y="2" width="18" height="8"/></symbol><symbol id="pen-norm" viewBox="0 0 20 12"><rect style="fill:var(--bar-norm-tint);stroke:var(--bar-norm);stroke-width:1.5" x="1.75" y="2.75" width="16.5" height="6.5"/></symbol><symbol id="pen-done" viewBox="0 0 20 12"><rect style="fill:var(--bar-done)" x="1" y="2" width="18" height="8"/></symbol><symbol id="pen-crit-act" viewBox="0 0 20 12"><rect style="fill:var(--bar-done)" x="1" y="2" width="8" height="8"/><rect style="fill:var(--bar-crit)" x="10" y="2" width="9" height="8"/></symbol><symbol id="pen-near-act" viewBox="0 0 20 12"><rect style="fill:var(--bar-done)" x="1" y="2" width="8" height="8"/><rect style="fill:url(#pc-near);stroke:var(--bar-near);stroke-width:1.5" x="10.75" y="2.75" width="7.5" height="6.5"/></symbol><symbol id="pen-norm-act" viewBox="0 0 20 12"><rect style="fill:var(--bar-done)" x="1" y="2" width="8" height="8"/><rect style="fill:var(--bar-norm-tint);stroke:var(--bar-norm);stroke-width:1.5" x="10.75" y="2.75" width="7.5" height="6.5"/></symbol><symbol id="pen-ms-crit" viewBox="0 0 20 12"><path style="fill:var(--bar-crit)" d="M10 .5l5.5 5.5-5.5 5.5L4.5 6z"/></symbol><symbol id="pen-ms-done" viewBox="0 0 20 12"><path style="fill:var(--bar-done)" d="M10 .5l5.5 5.5-5.5 5.5L4.5 6z"/></symbol><symbol id="pen-ms-norm" viewBox="0 0 20 12"><path style="fill:var(--field);stroke:var(--bar-norm);stroke-width:1.75" d="M10 1.5l4.5 4.5-4.5 4.5L5.5 6z"/></symbol><symbol id="pen-ms-near" viewBox="0 0 20 12"><path style="fill:url(#pc-near);stroke:var(--bar-near);stroke-width:1.75" d="M10 1.5l4.5 4.5-4.5 4.5L5.5 6z"/></symbol></defs></svg>
